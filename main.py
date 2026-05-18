@@ -8,7 +8,7 @@ load_dotenv()
 TOKEN = os.getenv("TOKEN")
 
 # YOUR DISCORD USER ID
-OWNER_ID = "1474852620152737802"
+OWNER_ID = 1474852620152737802
 
 intents = discord.Intents.default()
 bot = commands.Bot(command_prefix="!", intents=intents)
@@ -27,7 +27,7 @@ async def on_ready():
 async def tos(interaction: discord.Interaction):
 
     # OWNER ONLY
-    if str(interaction.user.id) != OWNER_ID:
+    if interaction.user.id != OWNER_ID:
         await interaction.response.send_message(
             "❌ You are not allowed to use this command.",
             ephemeral=True
