@@ -8,6 +8,9 @@ load_dotenv()
 
 TOKEN = os.getenv("TOKEN")
 
+# PUT YOUR DISCORD USER ID HERE
+OWNER_ID = 1474852620152737802
+
 intents = discord.Intents.default()
 bot = commands.Bot(command_prefix="!", intents=intents)
 
@@ -23,6 +26,14 @@ async def on_ready():
 
 @bot.tree.command(name="tos", description="Show Terms of Service")
 async def tos(interaction: discord.Interaction):
+
+    # ONLY OWNER CAN USE COMMAND
+    if interaction.user.id != OWNER_ID:
+        await interaction.response.send_message(
+            "❌ You are not allowed to use this command.",
+            ephemeral=True
+        )
+        return
 
     embed = discord.Embed(
         title="HATAKE MARKET — Terms of Service",
@@ -77,8 +88,8 @@ By purchasing any product or service from our store, you automatically agree to 
 
 • If you claim that an account FA is not working, full video proof is required showing:
 
-1. Purchase of the product
-2. Receiving the product
+1. Purchase of the product  
+2. Receiving the product  
 3. Attempting to log in
 
 • Warranty claims without proper proof may be denied.
