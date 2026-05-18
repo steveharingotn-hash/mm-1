@@ -24,6 +24,8 @@ async def on_ready():
 @bot.tree.command(name="tos", description="Show Terms of Service")
 async def tos(interaction: discord.Interaction):
 
+    print(f"COMMAND USED BY: {interaction.user.id}")
+
     if interaction.user.id != OWNER_ID:
         await interaction.response.send_message(
             "❌ You are not allowed to use this command.",
