@@ -1,15 +1,14 @@
 import os
 import discord
 from discord.ext import commands
-from discord import app_commands
 from dotenv import load_dotenv
 
 load_dotenv()
 
 TOKEN = os.getenv("TOKEN")
 
-# PUT YOUR DISCORD USER ID HERE
-OWNER_ID = 1474852620152737802
+# YOUR DISCORD USER ID
+OWNER_ID = "1474852620152737802"
 
 intents = discord.Intents.default()
 bot = commands.Bot(command_prefix="!", intents=intents)
@@ -18,24 +17,25 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 async def on_ready():
     try:
         synced = await bot.tree.sync()
-        print(f"Synced {len(synced)} command(s)")
+        print(f"✅ Synced {len(synced)} command(s)")
     except Exception as e:
         print(e)
 
-    print(f"Logged in as {bot.user}")
+    print(f"✅ Logged in as {bot.user}")
 
 @bot.tree.command(name="tos", description="Show Terms of Service")
 async def tos(interaction: discord.Interaction):
 
-    # ONLY OWNER CAN USE COMMAND
-    if interaction.user.id != OWNER_ID:
+    # OWNER ONLY
+    if str(interaction.user.id) != OWNER_ID:
         await interaction.response.send_message(
             "❌ You are not allowed to use this command.",
             ephemeral=True
         )
         return
 
-    embed = discord.Embed(
+    # EMBED 1
+    embed1 = discord.Embed(
         title="HATAKE MARKET — Terms of Service",
         description="""
 By purchasing any product or service from our store, you automatically agree to the following Terms of Service.
@@ -46,7 +46,7 @@ By purchasing any product or service from our store, you automatically agree to 
 
 • Buyers must send payment using the correct cryptocurrency, network, and wallet address provided by us.
 
-• Sending the wrong amount, using the wrong network, or sending to the wrong address may result in loss of funds. No refund or replacement will be provided in such cases.
+• Sending the wrong amount, using the wrong network, or sending to the wrong address may result in loss of funds.
 
 • If a product or account does not work in your country or region, it is not our responsibility.
 
@@ -54,91 +54,94 @@ By purchasing any product or service from our store, you automatically agree to 
 
 • We are not responsible for delays or issues caused by third-party suppliers.
 
-• Spamming, harassing, or repeatedly pinging staff members may result in a permanent ban from our services without refund or replacement.
+• Spamming, harassing, or repeatedly pinging staff members may result in a permanent ban.
 
-• Chargebacks, disputes, or malicious actions against the store will result in an immediate blacklist from all services.
+• Chargebacks, disputes, or malicious actions against the store will result in an immediate blacklist.
 
 • If a Roblox cookie or account information provided by the buyer is invalid, no refund will be issued.
+        """,
+        color=discord.Color.blue()
+    )
 
----
-
+    # EMBED 2
+    embed2 = discord.Embed(
+        description="""
 ## 🔄 Replacement Policy
 
-• Lifetime warranty applies only until the method is patched, discontinued, or the related server/service is terminated.
+• Lifetime warranty applies only until the method is patched or discontinued.
 
-• Warranty does not transfer to new servers, methods, or replacements unless specifically stated.
+• Warranty does not transfer to new servers or methods unless stated.
 
-• Attempting to falsely claim that an account or product is not working will result in warranty revocation.
+• False claims may result in warranty revocation.
 
-• Accounts with changed information (such as FA/email/password changes) are not eligible for replacement.
+• Accounts with changed FA/email/password are not eligible for replacement.
 
-• If a supplier refuses replacement, we may not be able to provide a refund or replacement.
+• Nitro, Server Boosts, Nitro subscriptions, Robux, and account orders are non-refundable.
 
-• Nitro, Server Boosts, Nitro subscriptions, Robux, and account orders are non-refundable and non-replaceable unless stated otherwise.
+• Refund requests may only be considered within 24 hours.
 
-• Refund requests may only be considered within 24 hours if the delivered product was completely non-functional upon delivery.
+• Refunds are never guaranteed.
 
-• Refunds are never guaranteed. If we determine the issue was caused directly by us, we may offer either a replacement or a partial refund of up to 50%.
-
-• Disrespecting staff or the owner may result in a permanent ban without refund or replacement.
+• Disrespecting staff or the owner may result in a permanent ban.
 
 ---
 
 ## 🌍 Warranty Policy
 
-• If you claim that an account FA is not working, full video proof is required showing:
+• Full video proof is required showing:
+1. Purchase
+2. Receiving product
+3. Login attempt
 
-1. Purchase of the product  
-2. Receiving the product  
-3. Attempting to log in
-
-• Warranty claims without proper proof may be denied.
+• Warranty claims without proof may be denied.
 
 • Maximum warranty period for accounts is 7 days unless stated otherwise.
-
----
-
-## ⚠️ Important Notice
-
-• By purchasing from our store, you automatically agree to all Terms of Service listed above.
-
-• Our Terms of Service may be updated or changed at any time without prior notice.
-
----
-
-## 💎 Nitro — Special Terms of Service
-
-By purchasing Nitro from our store, you agree to the following additional terms:
-
-• No direct warranty is provided for Nitro products.
-
-• Buyers must record the entire claiming process as proof in case of issues.
-
-• Warranty for auto-claim related issues is valid only within 45 minutes after delivery.
-
-• If payment is sent to the wrong wallet address or incorrect network, we are not responsible and no refund will be issued.
-
-• LYF Nitro includes auto-claim warranty only.
-
-• Middleman (MM) service is available upon request for deals.
-
-• We reserve the right to update or modify these terms at any time.
-
-By purchasing from our store, you automatically agree to all terms listed above.
-
-## ⭐ Vouch Policy
-
-• If you purchase directly from the owner, leaving a vouch within 45 minutes after delivery is required.
-
-• If you purchase through SellAuth, both server feedback and a vouch are required after receiving your product.
-
-• Failure to provide the required vouch or feedback may affect future purchases, support, warranty, or services.
-
-• Fake, edited, or misleading vouches are strictly prohibited and may result in a blacklist from our services.
         """,
         color=discord.Color.blue()
     )
 
-    await interaction.response.send_message(embed=embed)
+    # EMBED 3
+    embed3 = discord.Embed(
+        description="""
+## ⚠️ Important Notice
+
+• By purchasing from our store, you automatically agree to all Terms of Service.
+
+• Our Terms of Service may be updated at any time without prior notice.
+
+---
+
+## 💎 Nitro — Special Terms
+
+• No direct warranty is provided for Nitro products.
+
+• Buyers must record the entire claiming process.
+
+• Warranty for auto-claim issues is valid only within 45 minutes.
+
+• Wrong wallet/network payments are not refundable.
+
+• LYF Nitro includes auto-claim warranty only.
+
+• MM service is available upon request.
+
+---
+
+## ⭐ Vouch Policy
+
+• Direct purchases from owner require a vouch within 45 minutes.
+
+• SellAuth purchases require server feedback + vouch.
+
+• Failure to vouch may affect future support or warranty.
+
+• Fake or edited vouches may result in blacklist.
+        """,
+        color=discord.Color.blue()
+    )
+
+    await interaction.response.send_message(
+        embeds=[embed1, embed2, embed3]
+    )
 
 bot.run(TOKEN)
