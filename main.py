@@ -7,7 +7,6 @@ load_dotenv()
 
 TOKEN = os.getenv("TOKEN")
 
-OWNER_ID = 1474852620152737802
 
 intents = discord.Intents.default()
 
@@ -25,14 +24,7 @@ async def on_ready():
 async def tos(interaction: discord.Interaction):
 
     print(f"COMMAND USED BY: {interaction.user.id}")
-
-    if interaction.user.id != OWNER_ID:
-        await interaction.response.send_message(
-            "❌ You are not allowed to use this command.",
-            ephemeral=True
-        )
-        return
-
+                   
     embed1 = discord.Embed(
         title="HATAKE MARKET — Terms of Service",
         description="""
